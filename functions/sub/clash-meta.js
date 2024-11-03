@@ -1,5 +1,5 @@
 import { getClashMetaConfig } from "../internal/Converter/getClashMetaConfig.js";
-import getParsedSubData from "../internal/getParsedSubData.js";
+import getParsedSubData from "../internal/getParsedSubData.ts";
 import Yaml from "js-yaml";
 
 
@@ -9,7 +9,8 @@ export async function onRequest (context, isClashOriginal = false) {
     let Proxies = await getParsedSubData(
         URLObject.searchParams.get("url"), 
         context.env.EdgeSubDB, 
-        URLObject.searchParams.get("show_host") === "true"
+        URLObject.searchParams.get("show_host") === "true",
+        JSON.parse(URLObject.searchParams.get("http_headers")),
     );
     
     // process proxies if its a clash original request.
